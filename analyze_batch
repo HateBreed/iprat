@@ -1,0 +1,26 @@
+#!/bin/bash
+
+OUTFILE="privacy_risk_result.csv"
+
+if [ -f "$OUTFILE" ] ; then rm "$OUTFILE" ; fi
+
+I=1
+
+echo "\" \",\" \",\"ATT\",\"PRD\",\"DAC\",\"ASA\",\"ASR\",\"DAA\",\"DAQ\",\"DAS\",\"DST\",\"DIF\",\"DAV\",\"UDM\",\"DML\",\"AMP\",\"ATG\",\"ASV\",\"IMP\",\"LH\",\"PR\" >> $OUTFILE
+echo -n "\"Id\",\"Name\"" >> $OUTFILE
+
+while [ $I -lt 19 ] ; do
+	echo -n ",$I" >> $OUTFILE
+	I=$((I+1))
+done
+echo ",19" >> $OUTFILE
+
+cat $1 |while read line; do
+	ID=$(echo "$line"|cut -d':' -f1)
+	NAME=$(echo "$line"|cut -d':' -f2)
+	VALUES=$(echo "$line"|cut -d':' -f3)
+	
+	echo -n "\"$ID\",\"$NAME\"," >> $OUTFILE
+		
+	./validator -v "$VALUES" >> $OUTFILE
+done

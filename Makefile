@@ -1,5 +1,5 @@
 COMPILER=gcc
-FLAGS=-Wall -std=gnu99 -g
+FLAGS=-Wall -std=gnu99 -g -D__NO_ABBR 
 LIBS=
 SOURCES=src/validator.c src/model_calc_functions.c src/math_functions.c src/state_creation.c src/state_container.c src/tests.c
 EXEC=validator
